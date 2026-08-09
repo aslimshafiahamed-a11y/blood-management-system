@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 14 165 164;   /* #0EA5A4 Healthcare Teal */
+    --color-secondary: 37 99 235;  /* #2563EB Medical Blue */
+    --color-blood: 220 38 38;      /* #DC2626 Blood Accent */
+    --color-bg: 248 250 252;       /* #F8FAFC Light Background */
+    --color-surface: 255 255 255;  /* #FFFFFF Pure White Cards */
+    --color-text-main: 15 23 42;    /* #0F172A Slate-900 */
+    --color-text-muted: 100 116 139;/* #64748B Slate-500 */
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Accessible focus indicators for WCAG Compliance */
+  :focus-visible {
+    outline: 2px solid #0ea5a4;
+    outline-offset: 2px;
+  }
+}
+
+/* Custom Light Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0ea5a4;
+}
+
+/* Healthcare SaaS Card & Layout Classes */
+.card-saas {
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-saas:hover {
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  border-color: rgba(203, 213, 225, 0.8);
+}
+
+.header-gradient {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f766e 100%);
+}
+
+.hero-gradient {
+  background: linear-gradient(180deg, #f0fdfa 0%, #f8fafc 100%);
+}
+
+/* Pulse Animation for Critical Emergency Need */
+@keyframes pulse-teal {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.04); }
+}
+
+.animate-pulse-teal {
+  animation: pulse-teal 2s infinite ease-in-out;
+}
