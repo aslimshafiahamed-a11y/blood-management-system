@@ -12,7 +12,7 @@ import {
   CheckCircle2,
   Zap,
   PhoneCall,
-  Users
+  UserPlus
 } from 'lucide-react';
 import { BloodDonationHero } from '../assets/Illustrations';
 import { Button } from '../components/common/Button';
@@ -55,7 +55,7 @@ export const LandingPage = () => {
   return (
     <PageTransition className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-primary-500 selection:text-white">
       {/* Navigation Top Bar */}
-      <header className="h-20 border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-40 shadow-subtle">
+      <header className="h-20 border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-40 shadow-subtle">
         <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary-500 to-primary-600 flex items-center justify-center shadow-glow-teal">
@@ -65,38 +65,43 @@ export const LandingPage = () => {
               <span className="font-extrabold text-xl text-slate-900 tracking-tight leading-none">
                 Blood<span className="text-primary-500">Line</span>
               </span>
-              <span className="font-caption uppercase tracking-wider text-slate-400">Healthcare SaaS</span>
+              <span className="font-caption uppercase tracking-wider text-slate-500">Healthcare SaaS</span>
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 font-small text-slate-600">
-            <a href="#inventory" className="hover:text-primary-600 transition-colors">Live Stock Ticker</a>
-            <a href="#features" className="hover:text-primary-600 transition-colors">System Capabilities</a>
-            <a href="#emergency" className="hover:text-primary-600 transition-colors">Emergency Protocol</a>
+          <div className="hidden md:flex items-center gap-8 font-small text-slate-700">
+            <a href="#inventory" className="hover:text-primary-600 transition-colors font-semibold">Live Stock Ticker</a>
+            <a href="#features" className="hover:text-primary-600 transition-colors font-semibold">System Capabilities</a>
+            <a href="#emergency" className="hover:text-primary-600 transition-colors font-semibold">Emergency Protocol</a>
           </div>
 
           <div className="flex items-center gap-3">
             <Link to="/login">
-              <Button variant="ghost" size="sm">Sign In</Button>
+              <Button variant="outline" size="md" className="font-bold border-slate-300 text-slate-700 hover:bg-slate-100">
+                Sign In
+              </Button>
             </Link>
             <Link to="/register">
-              <Button variant="primary" size="sm">Register Account</Button>
+              <Button variant="primary" size="md" className="shadow-md font-bold text-white bg-primary-500 hover:bg-primary-600 px-5 ring-2 ring-primary-500/20">
+                <UserPlus className="w-4 h-4" />
+                <span>Register Account</span>
+              </Button>
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative py-16 md:py-24 px-4 sm:px-6 hero-gradient border-b border-slate-200/80 overflow-hidden">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Hero Section with Generated Healthcare Background Image */}
+      <section className="relative py-16 md:py-24 px-4 sm:px-6 bg-cover bg-center border-b border-slate-200/80 overflow-hidden" style={{ backgroundImage: "linear-gradient(180deg, rgba(240, 253, 250, 0.85) 0%, rgba(248, 250, 252, 0.95) 100%), url('/images/hero-bg.png')" }}>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="space-y-6 text-center lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 font-caption shadow-subtle">
-              <span className="w-2 h-2 rounded-full bg-primary-500 animate-ping" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-200 text-primary-800 font-caption shadow-subtle">
+              <span className="w-2.5 h-2.5 rounded-full bg-primary-500 animate-ping" />
               <span>Sprint 1 Enterprise SaaS Active</span>
             </div>
 
@@ -107,7 +112,7 @@ export const LandingPage = () => {
               </span>
             </h1>
 
-            <p className="font-body text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            <p className="font-body text-slate-700 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
               Connecting hospitals, blood banks, emergency responders, and voluntary donors through an ultra-secure, role-governed healthcare platform.
             </p>
 
@@ -119,8 +124,9 @@ export const LandingPage = () => {
                 </Button>
               </Link>
               <Link to="/register" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  <span>Become a Donor</span>
+                <Button variant="blood" size="lg" className="w-full sm:w-auto shadow-md">
+                  <UserPlus className="w-5 h-5" />
+                  <span>Register Account Now</span>
                 </Button>
               </Link>
             </div>
@@ -129,15 +135,15 @@ export const LandingPage = () => {
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200">
               <div>
                 <span className="block font-h2 text-slate-900">100k+</span>
-                <span className="font-small text-slate-500">Units Tracked</span>
+                <span className="font-small text-slate-600 font-medium">Units Tracked</span>
               </div>
               <div>
                 <span className="block font-h2 text-primary-600">99.9%</span>
-                <span className="font-small text-slate-500">Cold Chain Uptime</span>
+                <span className="font-small text-slate-600 font-medium">Cold Chain Uptime</span>
               </div>
               <div>
                 <span className="block font-h2 text-emerald-600">&lt; 15 min</span>
-                <span className="font-small text-slate-500">Emergency Dispatch</span>
+                <span className="font-small text-slate-600 font-medium">Emergency Dispatch</span>
               </div>
             </div>
           </motion.div>
@@ -160,7 +166,7 @@ export const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
             <div>
-              <span className="font-caption uppercase tracking-wider text-primary-600">Real-Time Telemetry</span>
+              <span className="font-caption uppercase tracking-wider text-primary-600 font-bold">Real-Time Telemetry</span>
               <h2 className="font-h2 text-slate-900">Central Regional Blood Reserve Status</h2>
             </div>
             <Badge variant="blood" pulse>Live Reserve Stream</Badge>
@@ -172,16 +178,16 @@ export const LandingPage = () => {
                 key={item.type}
                 className={`p-4 rounded-2xl border transition-all duration-200 ${
                   item.urgent
-                    ? 'bg-red-50/60 border-red-200 shadow-sm'
-                    : 'bg-slate-50 border-slate-200/80 hover:border-slate-300'
+                    ? 'bg-red-50/80 border-red-200 shadow-sm'
+                    : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-h2 text-slate-900">{item.type}</span>
                   <Droplet className={`w-5 h-5 ${item.urgent ? 'text-blood-600 fill-blood-600/20' : 'text-slate-400'}`} />
                 </div>
-                <span className="block font-small text-slate-700">{item.units}</span>
-                <span className={`font-caption uppercase block mt-1 ${item.urgent ? 'text-blood-600 animate-pulse' : 'text-slate-500'}`}>
+                <span className="block font-small text-slate-800 font-bold">{item.units}</span>
+                <span className={`font-caption uppercase block mt-1 ${item.urgent ? 'text-blood-600 font-extrabold animate-pulse' : 'text-slate-600 font-semibold'}`}>
                   {item.status}
                 </span>
               </div>
@@ -194,9 +200,9 @@ export const LandingPage = () => {
       <section id="features" className="py-20 px-4 sm:px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="font-caption uppercase tracking-wider text-secondary-600">Enterprise Stack</span>
+            <span className="font-caption uppercase tracking-wider text-secondary-600 font-bold">Enterprise Stack</span>
             <h2 className="font-h2 text-slate-900">Engineered for Healthcare Reliability</h2>
-            <p className="font-body text-slate-500">Built with Clean Architecture, JWT Role Isolation, and Django REST Framework backends.</p>
+            <p className="font-body text-slate-600">Built with Clean Architecture, JWT Role Isolation, and Django REST Framework backends.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -208,7 +214,7 @@ export const LandingPage = () => {
                     <Icon className="w-6 h-6" />
                   </div>
                   <h3 className="font-h3 text-slate-900">{f.title}</h3>
-                  <p className="font-small text-slate-500 leading-relaxed">{f.desc}</p>
+                  <p className="font-small text-slate-600 leading-relaxed">{f.desc}</p>
                 </div>
               );
             })}
@@ -222,7 +228,7 @@ export const LandingPage = () => {
           <div className="space-y-2 text-center md:text-left">
             <Badge variant="danger" pulse>Emergency Response Unit</Badge>
             <h3 className="font-h2 text-white">Require Immediate Trauma Requisition?</h3>
-            <p className="font-body text-slate-300 max-w-xl">Hospitals and certified trauma centers can bypass standard queues using prioritized dispatch keys.</p>
+            <p className="font-body text-slate-200 max-w-xl">Hospitals and certified trauma centers can bypass standard queues using prioritized dispatch keys.</p>
           </div>
 
           <div className="flex items-center gap-4">
@@ -237,13 +243,13 @@ export const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto py-8 px-4 sm:px-6 border-t border-slate-200 bg-white font-caption text-slate-500">
+      <footer className="mt-auto py-8 px-4 sm:px-6 border-t border-slate-200 bg-white font-caption text-slate-600">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Droplet className="w-4 h-4 text-primary-500" />
-            <span className="font-bold text-slate-800">BloodLine System &copy; 2026</span>
+            <span className="font-bold text-slate-900">BloodLine System &copy; 2026</span>
           </div>
-          <div className="flex gap-6 text-slate-600 font-medium">
+          <div className="flex gap-6 text-slate-700 font-semibold">
             <Link to="/login" className="hover:text-primary-600">Admin Portal</Link>
             <Link to="/login" className="hover:text-primary-600">Blood Bank Staff</Link>
             <Link to="/login" className="hover:text-primary-600">Hospital Staff</Link>
