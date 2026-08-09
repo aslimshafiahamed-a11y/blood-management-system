@@ -77,8 +77,8 @@ export const Sidebar = () => {
     >
       {/* Brand Header */}
       <div className="h-16 px-4 flex items-center justify-between border-b border-slate-100">
-        <NavLink to="/" className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary-500 to-primary-600 flex items-center justify-center shadow-glow-teal shrink-0">
+        <NavLink to="/" className="flex items-center gap-3 group">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary-500 to-primary-600 flex items-center justify-center shadow-glow-teal shrink-0 group-hover:scale-105 transition-transform">
             <Droplet className="w-5 h-5 text-white fill-white/20" />
           </div>
           {!collapsed && (
@@ -102,7 +102,7 @@ export const Sidebar = () => {
       {/* Role Scope */}
       {!collapsed && user && (
         <div className="px-4 py-2.5 bg-slate-50/80 border-b border-slate-100 flex items-center justify-between">
-          <span className="text-xs font-medium text-slate-500">Active Scope:</span>
+          <span className="text-xs font-semibold text-slate-500">Active Scope:</span>
           <Badge variant={role === 'ADMIN' ? 'danger' : role === 'BLOOD_BANK_STAFF' ? 'blood' : role === 'HOSPITAL_STAFF' ? 'secondary' : 'primary'} size="sm">
             {user.role_display || role}
           </Badge>
@@ -126,7 +126,7 @@ export const Sidebar = () => {
               }
             >
               <div className="flex items-center gap-3">
-                <Icon className="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" />
+                <Icon className="w-4 h-4 shrink-0 group-hover:translate-x-1 group-hover:scale-110 transition-all duration-200" />
                 {!collapsed && <span>{item.label}</span>}
               </div>
               {!collapsed && item.badge && (
@@ -146,9 +146,9 @@ export const Sidebar = () => {
             logout();
             navigate('/login');
           }}
-          className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-red-50 transition-all text-xs font-semibold"
+          className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-red-50 transition-all text-xs font-semibold group"
         >
-          <LogOut className="w-4 h-4 shrink-0" />
+          <LogOut className="w-4 h-4 shrink-0 group-hover:-translate-x-0.5 transition-transform" />
           {!collapsed && <span>Sign Out Workspace</span>}
         </button>
       </div>

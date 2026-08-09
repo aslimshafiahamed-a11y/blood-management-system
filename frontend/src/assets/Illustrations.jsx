@@ -15,16 +15,12 @@ export const BloodDonationHero = ({ className = "w-full h-auto" }) => (
       </linearGradient>
     </defs>
     
-    {/* Soft Light Background Ring */}
     <circle cx="300" cy="225" r="180" fill="url(#heroTealGrad)"/>
     
-    {/* Main Heart & Blood Drop Shield */}
     <path d="M300 350C250 350 160 280 160 210C160 160 195 130 240 130C270 130 290 145 300 160C310 145 330 130 360 130C405 130 440 160 440 210C440 280 350 350 300 350Z" fill="url(#bloodDropGrad)" opacity="0.95"/>
     
-    {/* Clean Pulse ECG Line */}
     <path d="M120 225H220L235 180L255 270L275 190L295 240L310 215L325 225H480" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
     
-    {/* Floating Healthcare Badges */}
     <g transform="translate(110, 110)">
       <rect x="0" y="0" width="70" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
       <circle cx="35" cy="35" r="18" fill="#CCFBF1"/>
@@ -88,12 +84,15 @@ export const BloodInventory = ({ className = "w-full h-auto" }) => (
   </svg>
 );
 
-// 5. Donor Registration Illustration
-export const DonorRegistration = ({ className = "w-full h-auto" }) => (
+// 5. Donor Management & Registration Illustration
+export const DonorManagement = ({ className = "w-full h-auto" }) => (
   <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <circle cx="200" cy="150" r="100" fill="#F0FDFA"/>
-    <path d="M200 90L260 120V180C260 220 230 250 200 260C170 250 140 220 140 180V120L200 90Z" fill="#FFFFFF" stroke="#0EA5A4" strokeWidth="3"/>
-    <circle cx="200" cy="160" r="24" fill="#CCFBF1"/>
-    <path d="M190 160L197 167L212 152" stroke="#0EA5A4" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    <rect width="400" height="300" rx="20" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="2"/>
+    <circle cx="200" cy="110" r="45" fill="#CCFBF1" stroke="#0EA5A4" strokeWidth="3"/>
+    <path d="M120 230C120 185 155 170 200 170C245 170 280 185 280 230" fill="#2563EB" opacity="0.85"/>
+    <circle cx="270" cy="90" r="22" fill="#FEF2F2" stroke="#DC2626" strokeWidth="2"/>
+    <path d="M270 80V100M260 90H280" stroke="#DC2626" strokeWidth="3" strokeLinecap="round"/>
   </svg>
 );
+
+export const DonorRegistration = DonorManagement;

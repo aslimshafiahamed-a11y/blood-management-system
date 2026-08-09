@@ -12,17 +12,25 @@ import {
   Clock,
   Plus,
   ShieldCheck,
-  Zap,
-  ArrowUpRight
+  RefreshCw
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/common/Card';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { Modal } from '../components/common/Modal';
+import { CountUpNumber } from '../components/common/CountUpNumber';
+import { SkeletonCard, SkeletonTable } from '../components/common/Skeleton';
+import { PageTransition } from '../components/layout/PageTransition';
 
 export const DashboardOverviewPage = () => {
   const { user, role } = useAuth();
   const [isQuickActionOpen, setIsQuickActionOpen] = useState(false);
+  const [isLoadingSim, setIsLoadingSim] = useState(false);
+
+  const triggerSimulatedReload = () => {
+    setIsLoadingSim(true);
+    setTimeout(() => setIsLoadingSim(false), 800);
+  };
 
   const getRoleMetrics = () => {
     if (role === 'ADMIN') {
@@ -70,23 +78,27 @@ export const DashboardOverviewPage = () => {
   ];
 
   return (
-    <div className="space-y-6 font-sans">
-      {/* Gradient Banner Header */}
+    <PageTransition className="space-y-6 font-sans">
+      {/* Gradient Header Banner */}
       <div className="bg-gradient-to-r from-slate-900 via-teal-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
         <div className="space-y-2 z-10">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-teal-300">Healthcare Command Center</span>
+            <span className="font-caption uppercase tracking-wider text-teal-300">Healthcare Command Center</span>
             <Badge variant="primary" size="sm">Operational Active</Badge>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="font-h1 text-white tracking-tight">
             Welcome back, {user?.full_name || 'System Operator'}
           </h1>
-          <p className="text-xs text-slate-300 max-w-xl">
+          <p className="font-small text-slate-300 max-w-xl">
             Role: <span className="text-white font-semibold">{user?.role_display || role}</span> | Workspace: <span className="text-white font-semibold">{user?.organization_name || 'Central Health Authority'}</span>
           </p>
         </div>
 
         <div className="z-10 flex items-center gap-3">
+          <Button variant="outline" size="sm" onClick={triggerSimulatedReload} className="bg-white/10 hover:bg-white/20 text-white border-white/20">
+            <RefreshCw className={`w-4 h-4 ${isLoadingSim ? 'animate-spin' : ''}`} />
+            <span>Telemetry Refresh</span>
+          </Button>
           <Button variant="primary" size="md" onClick={() => setIsQuickActionOpen(true)} className="shadow-lg">
             <Plus className="w-4 h-4" />
             <span>New Action Workflow</span>
@@ -94,88 +106,98 @@ export const DashboardOverviewPage = () => {
         </div>
       </div>
 
-      {/* Statistics Cards Grid */}
+      {/* Animated Statistics Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {metrics.map((m, idx) => {
-          const IconComponent = m.icon;
-          return (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: idx * 0.1 }}
-            >
-              <Card>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{m.title}</span>
-                  <div className={`p-2.5 rounded-xl ${m.bg} border border-slate-100`}>
-                    <IconComponent className={`w-5 h-5 ${m.color}`} />
+        {isLoadingSim ? (
+          Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+        ) : (
+          metrics.map((m, idx) => {
+            const IconComponent = m.icon;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: idx * 0.08 }}
+              >
+                <Card>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-caption text-slate-500 uppercase tracking-wider">{m.title}</span>
+                    <div className={`p-2.5 rounded-xl ${m.bg} border border-slate-100`}>
+                      <IconComponent className={`w-5 h-5 ${m.color}`} />
+                    </div>
                   </div>
-                </div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1">{m.value}</div>
-                <div className="text-xs font-semibold text-slate-500 flex items-center gap-1">
-                  <span>{m.change}</span>
-                </div>
-              </Card>
-            </motion.div>
-          );
-        })}
+                  <div className="font-h2 text-slate-900 mb-1">
+                    <CountUpNumber value={m.value} />
+                  </div>
+                  <div className="font-caption text-slate-500 font-semibold flex items-center gap-1">
+                    <span>{m.change}</span>
+                  </div>
+                </Card>
+              </motion.div>
+            );
+          })
+        )}
       </div>
 
       {/* Emergency Requisitions & Inventory Status */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Emergency Orders Table */}
+        {/* Emergency Orders Table */}
         <div className="lg:col-span-2 space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                <AlertTriangle className="w-5 h-5 text-blood-600" />
-                <span>Active Blood Requisition Pipeline</span>
-              </CardTitle>
-              <Badge variant="blood" pulse>Live Dispatch</Badge>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead className="text-[11px] font-bold uppercase tracking-wider text-slate-600 bg-slate-50 border-y border-slate-200">
-                    <tr>
-                      <th className="p-3.5">Order ID</th>
-                      <th className="p-3.5">Requesting Unit</th>
-                      <th className="p-3.5">Type</th>
-                      <th className="p-3.5">Quantity</th>
-                      <th className="p-3.5">Urgency</th>
-                      <th className="p-3.5">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {emergencyRequests.map((req) => (
-                      <tr key={req.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="p-3.5 font-mono font-bold text-slate-900">{req.id}</td>
-                        <td className="p-3.5 font-semibold text-slate-700">{req.hospital}</td>
-                        <td className="p-3.5">
-                          <span className="px-2.5 py-0.5 rounded font-black bg-red-50 text-red-700 border border-red-200">
-                            {req.type}
-                          </span>
-                        </td>
-                        <td className="p-3.5 font-bold text-slate-900">{req.units} Units</td>
-                        <td className="p-3.5">
-                          <Badge variant={req.urgency === 'CRITICAL' ? 'danger' : req.urgency === 'HIGH' ? 'warning' : 'neutral'} size="sm">
-                            {req.urgency}
-                          </Badge>
-                        </td>
-                        <td className="p-3.5 font-bold text-emerald-600">{req.status}</td>
+          {isLoadingSim ? (
+            <SkeletonTable rows={4} />
+          ) : (
+            <Card hoverEffect={false}>
+              <CardHeader>
+                <CardTitle>
+                  <AlertTriangle className="w-5 h-5 text-blood-600" />
+                  <span>Active Blood Requisition Pipeline</span>
+                </CardTitle>
+                <Badge variant="blood" pulse>Live Dispatch</Badge>
+              </CardHeader>
+              <CardContent className="p-0">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left font-small">
+                    <thead className="font-caption uppercase tracking-wider text-slate-600 bg-slate-50 border-y border-slate-200">
+                      <tr>
+                        <th className="p-3.5">Order ID</th>
+                        <th className="p-3.5">Requesting Unit</th>
+                        <th className="p-3.5">Type</th>
+                        <th className="p-3.5">Quantity</th>
+                        <th className="p-3.5">Urgency</th>
+                        <th className="p-3.5">Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {emergencyRequests.map((req) => (
+                        <tr key={req.id} className="hover:bg-slate-50/80 transition-colors">
+                          <td className="p-3.5 font-mono font-bold text-slate-900">{req.id}</td>
+                          <td className="p-3.5 font-semibold text-slate-700">{req.hospital}</td>
+                          <td className="p-3.5">
+                            <span className="px-2.5 py-0.5 rounded font-black bg-red-50 text-red-700 border border-red-200">
+                              {req.type}
+                            </span>
+                          </td>
+                          <td className="p-3.5 font-bold text-slate-900">{req.units} Units</td>
+                          <td className="p-3.5">
+                            <Badge variant={req.urgency === 'CRITICAL' ? 'danger' : req.urgency === 'HIGH' ? 'warning' : 'neutral'} size="sm">
+                              {req.urgency}
+                            </Badge>
+                          </td>
+                          <td className="p-3.5 font-bold text-emerald-600">{req.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
-        {/* Right 1 Col: Reserve Quick View */}
+        {/* Reserve Quick View */}
         <div className="space-y-4">
-          <Card>
+          <Card hoverEffect={false}>
             <CardHeader>
               <CardTitle>
                 <Droplet className="w-5 h-5 text-primary-600" />
@@ -190,13 +212,13 @@ export const DashboardOverviewPage = () => {
                 { type: 'AB- Negative', count: 18, pct: 12, status: 'Low' },
               ].map((item, idx) => (
                 <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-2">
-                  <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center justify-between font-small">
                     <span className="font-bold text-slate-900">{item.type}</span>
                     <span className="font-semibold text-slate-500">{item.count} Units</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${
+                      className={`h-full rounded-full transition-all duration-500 ${
                         item.pct < 30 ? 'bg-red-500' : item.pct < 50 ? 'bg-amber-500' : 'bg-emerald-500'
                       }`}
                       style={{ width: `${item.pct}%` }}
@@ -215,25 +237,25 @@ export const DashboardOverviewPage = () => {
         onClose={() => setIsQuickActionOpen(false)}
         title="Healthcare Action Gateway"
       >
-        <div className="space-y-4">
-          <p className="text-xs text-slate-600 leading-relaxed">
+        <div className="space-y-4 font-small">
+          <p className="text-slate-600 leading-relaxed">
             Select an action trigger below to test light theme modal popover dialogs and design system components.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
               onClick={() => setIsQuickActionOpen(false)}
-              className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-primary-500 text-left text-xs font-semibold text-slate-900 transition-colors shadow-subtle"
+              className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-primary-500 text-left font-semibold text-slate-900 transition-colors shadow-subtle"
             >
               <span className="block font-bold text-primary-600 mb-1">Simulate Emergency Request</span>
-              <span className="text-[10px] text-slate-500">Triggers automated dispatch algorithm</span>
+              <span className="font-caption text-slate-500">Triggers automated dispatch algorithm</span>
             </button>
             <button
               onClick={() => setIsQuickActionOpen(false)}
-              className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-secondary-500 text-left text-xs font-semibold text-slate-900 transition-colors shadow-subtle"
+              className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-secondary-500 text-left font-semibold text-slate-900 transition-colors shadow-subtle"
             >
               <span className="block font-bold text-secondary-600 mb-1">Log Donor Screening</span>
-              <span className="text-[10px] text-slate-500">Audits blood temperature & safety</span>
+              <span className="font-caption text-slate-500">Audits blood temperature & safety</span>
             </button>
           </div>
 
@@ -244,6 +266,6 @@ export const DashboardOverviewPage = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </PageTransition>
   );
 };

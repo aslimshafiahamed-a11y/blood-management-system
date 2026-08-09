@@ -1,12 +1,14 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
-export const Card = ({ children, className = '', ...props }) => (
-  <div
-    className={`bg-white border border-slate-200/80 rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-200 ${className}`}
+export const Card = ({ children, className = '', hoverEffect = true, ...props }) => (
+  <motion.div
+    whileHover={hoverEffect ? { y: -4, transition: { duration: 0.2, ease: 'easeOut' } } : {}}
+    className={`bg-white border border-slate-200/85 rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-shadow duration-200 ${className}`}
     {...props}
   >
     {children}
-  </div>
+  </motion.div>
 );
 
 export const CardHeader = ({ children, className = '' }) => (
@@ -16,13 +18,13 @@ export const CardHeader = ({ children, className = '' }) => (
 );
 
 export const CardTitle = ({ children, className = '' }) => (
-  <h3 className={`text-base font-bold text-slate-900 flex items-center gap-2 tracking-tight ${className}`}>
+  <h3 className={`text-[20px] leading-[28px] font-bold text-slate-900 flex items-center gap-2 tracking-tight ${className}`}>
     {children}
   </h3>
 );
 
 export const CardContent = ({ children, className = '' }) => (
-  <div className={`text-slate-600 text-sm ${className}`}>{children}</div>
+  <div className={`text-slate-600 text-[16px] leading-[26px] ${className}`}>{children}</div>
 );
 
 export const CardFooter = ({ children, className = '' }) => (

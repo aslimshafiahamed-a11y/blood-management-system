@@ -17,6 +17,7 @@ import {
 import { BloodDonationHero } from '../assets/Illustrations';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
+import { PageTransition } from '../components/layout/PageTransition';
 
 export const LandingPage = () => {
   const bloodGroups = [
@@ -52,7 +53,7 @@ export const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-primary-500 selection:text-white">
+    <PageTransition className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-primary-500 selection:text-white">
       {/* Navigation Top Bar */}
       <header className="h-20 border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-40 shadow-subtle">
         <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
@@ -64,11 +65,11 @@ export const LandingPage = () => {
               <span className="font-extrabold text-xl text-slate-900 tracking-tight leading-none">
                 Blood<span className="text-primary-500">Line</span>
               </span>
-              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Healthcare SaaS</span>
+              <span className="font-caption uppercase tracking-wider text-slate-400">Healthcare SaaS</span>
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+          <div className="hidden md:flex items-center gap-8 font-small text-slate-600">
             <a href="#inventory" className="hover:text-primary-600 transition-colors">Live Stock Ticker</a>
             <a href="#features" className="hover:text-primary-600 transition-colors">System Capabilities</a>
             <a href="#emergency" className="hover:text-primary-600 transition-colors">Emergency Protocol</a>
@@ -94,19 +95,19 @@ export const LandingPage = () => {
             transition={{ duration: 0.5 }}
             className="space-y-6 text-center lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-extrabold shadow-subtle">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 font-caption shadow-subtle">
               <span className="w-2 h-2 rounded-full bg-primary-500 animate-ping" />
               <span>Sprint 1 Enterprise SaaS Active</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight">
+            <h1 className="font-h1 text-slate-900 leading-tight">
               Mission-Critical <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-primary-600 via-secondary-600 to-blood-600 bg-clip-text text-transparent">
                 Blood Supply Network
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            <p className="font-body text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
               Connecting hospitals, blood banks, emergency responders, and voluntary donors through an ultra-secure, role-governed healthcare platform.
             </p>
 
@@ -127,16 +128,16 @@ export const LandingPage = () => {
             {/* Metrics */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200">
               <div>
-                <span className="block text-2xl font-extrabold text-slate-900">100k+</span>
-                <span className="text-xs font-medium text-slate-500">Units Tracked</span>
+                <span className="block font-h2 text-slate-900">100k+</span>
+                <span className="font-small text-slate-500">Units Tracked</span>
               </div>
               <div>
-                <span className="block text-2xl font-extrabold text-primary-600">99.9%</span>
-                <span className="text-xs font-medium text-slate-500">Cold Chain Uptime</span>
+                <span className="block font-h2 text-primary-600">99.9%</span>
+                <span className="font-small text-slate-500">Cold Chain Uptime</span>
               </div>
               <div>
-                <span className="block text-2xl font-extrabold text-emerald-600">&lt; 15 min</span>
-                <span className="text-xs font-medium text-slate-500">Emergency Dispatch</span>
+                <span className="block font-h2 text-emerald-600">&lt; 15 min</span>
+                <span className="font-small text-slate-500">Emergency Dispatch</span>
               </div>
             </div>
           </motion.div>
@@ -159,8 +160,8 @@ export const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-primary-600">Real-Time Telemetry</span>
-              <h2 className="text-2xl font-bold text-slate-900">Central Regional Blood Reserve Status</h2>
+              <span className="font-caption uppercase tracking-wider text-primary-600">Real-Time Telemetry</span>
+              <h2 className="font-h2 text-slate-900">Central Regional Blood Reserve Status</h2>
             </div>
             <Badge variant="blood" pulse>Live Reserve Stream</Badge>
           </div>
@@ -176,11 +177,11 @@ export const LandingPage = () => {
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-2xl font-black text-slate-900">{item.type}</span>
+                  <span className="font-h2 text-slate-900">{item.type}</span>
                   <Droplet className={`w-5 h-5 ${item.urgent ? 'text-blood-600 fill-blood-600/20' : 'text-slate-400'}`} />
                 </div>
-                <span className="block text-sm font-semibold text-slate-700">{item.units}</span>
-                <span className={`text-[10px] font-bold uppercase block mt-1 ${item.urgent ? 'text-blood-600 animate-pulse' : 'text-slate-500'}`}>
+                <span className="block font-small text-slate-700">{item.units}</span>
+                <span className={`font-caption uppercase block mt-1 ${item.urgent ? 'text-blood-600 animate-pulse' : 'text-slate-500'}`}>
                   {item.status}
                 </span>
               </div>
@@ -193,9 +194,9 @@ export const LandingPage = () => {
       <section id="features" className="py-20 px-4 sm:px-6 bg-slate-50">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-secondary-600">Enterprise Stack</span>
-            <h2 className="text-3xl font-extrabold text-slate-900">Engineered for Healthcare Reliability</h2>
-            <p className="text-slate-500 text-sm">Built with Clean Architecture, JWT Role Isolation, and Django REST Framework backends.</p>
+            <span className="font-caption uppercase tracking-wider text-secondary-600">Enterprise Stack</span>
+            <h2 className="font-h2 text-slate-900">Engineered for Healthcare Reliability</h2>
+            <p className="font-body text-slate-500">Built with Clean Architecture, JWT Role Isolation, and Django REST Framework backends.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -206,8 +207,8 @@ export const LandingPage = () => {
                   <div className="w-12 h-12 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center text-primary-600">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-base font-bold text-slate-900">{f.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">{f.desc}</p>
+                  <h3 className="font-h3 text-slate-900">{f.title}</h3>
+                  <p className="font-small text-slate-500 leading-relaxed">{f.desc}</p>
                 </div>
               );
             })}
@@ -220,8 +221,8 @@ export const LandingPage = () => {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-teal-900 to-slate-900 text-white shadow-xl">
           <div className="space-y-2 text-center md:text-left">
             <Badge variant="danger" pulse>Emergency Response Unit</Badge>
-            <h3 className="text-2xl font-bold text-white">Require Immediate Trauma Requisition?</h3>
-            <p className="text-sm text-slate-300 max-w-xl">Hospitals and certified trauma centers can bypass standard queues using prioritized dispatch keys.</p>
+            <h3 className="font-h2 text-white">Require Immediate Trauma Requisition?</h3>
+            <p className="font-body text-slate-300 max-w-xl">Hospitals and certified trauma centers can bypass standard queues using prioritized dispatch keys.</p>
           </div>
 
           <div className="flex items-center gap-4">
@@ -236,7 +237,7 @@ export const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto py-8 px-4 sm:px-6 border-t border-slate-200 bg-white text-xs text-slate-500">
+      <footer className="mt-auto py-8 px-4 sm:px-6 border-t border-slate-200 bg-white font-caption text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Droplet className="w-4 h-4 text-primary-500" />
@@ -250,6 +251,6 @@ export const LandingPage = () => {
           </div>
         </div>
       </footer>
-    </div>
+    </PageTransition>
   );
 };
